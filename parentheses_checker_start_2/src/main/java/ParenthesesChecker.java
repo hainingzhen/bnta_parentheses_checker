@@ -1,12 +1,17 @@
-import com.sun.security.jgss.GSSUtil;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
 public class ParenthesesChecker {
 
     private static Stack<Character> stack;
+    private static Map<Character, Character> map = Map.of(
+                                                        ')', '(',
+                                                        '}', '{',
+                                                        ']', '[',
+                                                        '>', '<'
+                                                         );
+
 
     public static boolean checkParentheses(String testString) {
 
@@ -14,7 +19,7 @@ public class ParenthesesChecker {
 
         for (int i = 0; i < testString.length(); i++) {
 
-            char testChar = testString.charAt(i);
+            Character testChar = testString.charAt(i);
 
             switch (testChar){
                 case '(':
@@ -24,29 +29,17 @@ public class ParenthesesChecker {
                     stack.push(testChar);
                     break;
                 case ')':
-                    if (check('(')) {
-                        stack.pop();
-                        continue;
-                    }
-                    return false;
                 case '}':
-                    if (check('{')) {
-                        stack.pop();
-                        continue;
-                    }
-                    return false;
                 case ']':
-                    if (check('[')) {
-                        stack.pop();
-                        continue;
-                    }
-                    return false;
                 case '>':
-                    if (check('<')) {
+                    if (stack.empty()) return false;
+                    if (map.get(testChar) == stack.peek()) {
                         stack.pop();
-                        continue;
+                        break;
                     }
-                    return false;
+                    else {
+                        return false;
+                    }
                 default:
                     break;
             }
@@ -55,8 +48,10 @@ public class ParenthesesChecker {
         return stack.empty();
     }
 
-    private static boolean check(char bracket) {
-        if (stack.empty()) return false;
-        return stack.peek() == bracket;
-    }
+
+//    public static void main(String[] args) {
+//        String testString = "()";
+//
+//        System.out.println(checkParentheses(testString));
+//    }
 }
