@@ -37,9 +37,7 @@ public class ParenthesesChecker {
                         stack.pop();
                         break;
                     }
-                    else {
-                        return false;
-                    }
+                    return false;
                 default:
                     break;
             }
@@ -48,10 +46,4 @@ public class ParenthesesChecker {
         return stack.empty();
     }
 
-
-//    public static void main(String[] args) {
-//        String testString = "()";
-//
-//        System.out.println(checkParentheses(testString));
-//    }
 }
